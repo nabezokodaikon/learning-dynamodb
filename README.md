@@ -1,2 +1,5 @@
 # DynamoDB学習
-[Amazon DynamoDB for Serverless Architectures](https://www.aws.training/Details/eLearning?id=64525)
+
+## 参考
+* [Amazon DynamoDB for Serverless Architectures](https://www.aws.training/Details/eLearning?id=64525)
+* [初めてのサーバーレスアプリケーション開発 ～DynamoDBにテーブルを作成する～](https://dev.classmethod.jp/articles/serverless-first-dynamodb/)
