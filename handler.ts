@@ -1,35 +1,39 @@
-import "https://deno.land/x/dotenv@v2.0.0/load.ts";
-
+import {
+  createClient
+} from "https://raw.githubusercontent.com/chiefbiiko/dynamodb/8d7cd9f1c7ce028dbf0ad15d6b90665e40d30953/mod.ts";
+import {
+  ClientConfig,
+  Credentials,
+  Doc,
+  DynamoDBClient,
+} from "https://raw.githubusercontent.com/chiefbiiko/dynamodb/8d7cd9f1c7ce028dbf0ad15d6b90665e40d30953/mod.ts";
 import {
   APIGatewayProxyEventV2,
   APIGatewayProxyResultV2,
   Context,
 } from "https://deno.land/x/lambda@1.11.0/mod.ts";
+import { v4 } from "https://deno.land/std@0.93.0/uuid/mod.ts";
+import "https://deno.land/x/dotenv@v2.0.0/load.ts";
 
-import {
-  createClient,
-  Doc,
-  DynamoDBClient,
-} from "./deps.ts";
+const uuid = v4.generate;
 
-
-function ok(body: unknown, statusCode = 200) {
+function ok(body: unknown, statusCode = 200): APIGatewayProxyResultV2 {
   return {
     statusCode,
     body: JSON.stringify(body),
   };
 }
 
-function error(message: string, statusCode = 500) {
+function error(message: string, statusCode = 500): APIGatewayProxyResultV2 {
   return ok({ message: message }, statusCode);
 }
 
-async function getPerson(person_id: string) {
-  const credentials = {
+async function getPerson(person_id: string): Promise<APIGatewayProxyResultV2> {
+  const credentials: Credentials = {
     accessKeyId: Deno.env.get("ACCESS_KEY_ID") as string,
     secretAccessKey: Deno.env.get("SECRET_ACCESS_KEY") as string,
   };
-  const clientConfig = {
+  const clientConfig: ClientConfig = {
     credentials: credentials,
     region: "us-east-1",
   };
@@ -59,6 +63,6 @@ async function getPerson(person_id: string) {
 export async function main(
   event: APIGatewayProxyEventV2,
   context: Context
-) {
+): Promise<APIGatewayProxyResultV2> {
   return await getPerson("001");
 }
