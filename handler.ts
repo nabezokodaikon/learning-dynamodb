@@ -62,7 +62,8 @@ export async function main(
   event: APIGatewayProxyEventV2,
   _: Context
 ): Promise<APIGatewayProxyResultV2> {
-  const personId = (event as any)["person_id"];
+  const personId = (event as any)["record"]["person_id"];
+  console.log(personId);
   const res = await getPerson(personId);
   return res;
 }
