@@ -7,3 +7,27 @@
 
 ## API Gateway
 [devステージ](https://57nhbd2ttk.execute-api.us-east-1.amazonaws.com/dev/?person_id=002)
+
+## 設定
+### Lambdaのテストパラメータ
+```json
+{
+  "record": {
+    "person_id": "002"
+  }
+}
+```
+
+### メソッドリクエスト -> URL クエリ文字列パラメータ
+```
+person_id
+```
+
+### 統合リクエスト -> マッピングテンプレート
+```json
+{
+    "record" : {
+        "person_id" : "$input.params('person_id')"
+    }
+}
+```
