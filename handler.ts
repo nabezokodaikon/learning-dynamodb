@@ -12,10 +12,8 @@ import {
   APIGatewayProxyResultV2,
   Context,
 } from "https://deno.land/x/lambda@1.11.0/mod.ts";
-import { v4 } from "https://deno.land/std@0.93.0/uuid/mod.ts";
 import "https://deno.land/x/dotenv@v2.0.0/load.ts";
 
-const uuid = v4.generate;
 
 function ok(body: unknown, statusCode = 200): APIGatewayProxyResultV2 {
   return {
@@ -62,7 +60,9 @@ async function getPerson(person_id: string): Promise<APIGatewayProxyResultV2> {
 
 export async function main(
   event: APIGatewayProxyEventV2,
-  context: Context
+  _: Context
 ): Promise<APIGatewayProxyResultV2> {
-  return await getPerson("001");
+  const personId = (event as any)["person_id"];
+  const res = await getPerson(personId);
+  return res;
 }
